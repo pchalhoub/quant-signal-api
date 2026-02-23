@@ -10,4 +10,4 @@ COPY . .
 
 ENV ENV=prod
 
-CMD ["sh", "-c", "python app/create_tables.py && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "python create_tables.py && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
