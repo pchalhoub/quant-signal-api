@@ -12,25 +12,23 @@ def fetch_daily_prices(ticker: str):
     }
 
     r = requests.get(url, params=params)
-    data = r.json()#["Time Series (Daily)"]
+    data = r.json()["Time Series (Daily)"]
 
-    #df = pd.DataFrame(data).T
-    #df.index = pd.to_datetime(df.index)
-    #df = df.sort_index()
+    df = pd.DataFrame(data).T
+    df.index = pd.to_datetime(df.index)
+    df = df.sort_index()
 
-    #df["close"] = df["4. close"].astype(float)
+    df["close"] = df["4. close"].astype(float)
 
-    #return df[["close"]]
+    return df[["close"]]
 
-    return data
+def compute_signals(df):
+    df["returns"] = df["close"].pct_change()
 
-#def compute_signals(df):
-#    df["returns"] = df["close"].pct_change()
+    momentum_30d = df["close"].iloc[-1] / df["close"].iloc[-30] - 1
+    volatility_30d = df["returns"].iloc[-30:].std() * (252 ** 0.5)
 
-#    momentum_30d = df["close"].iloc[-1] / df["close"].iloc[-30] - 1
-#    volatility_30d = df["returns"].iloc[-30:].std() * (252 ** 0.5)
-
- #   return {
- #       "momentum_30d": float(momentum_30d),
- #       "volatility_30d": float(volatility_30d)
- #   }
+    return {
+        "momentum_30d": float(momentum_30d),
+        "volatility_30d": float(volatility_30d)
+    }

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.db import SessionLocal
 from app import models
-from app.signals import fetch_daily_prices#, compute_signals
+from app.signals import fetch_daily_prices, compute_signals
 
 router = APIRouter()
 
