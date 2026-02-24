@@ -12,6 +12,8 @@ def fetch_daily_prices(ticker: str):
     }
 
     r = requests.get(url, params=params)
+    data = r.json()
+    print(data)
     data = r.json()["Time Series (Daily)"]
 
     df = pd.DataFrame(data).T
